@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Wix+Madefor+Display:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Beat The Quiz</title>
+</head>
+
+<body>
+    <header>
+        <h1>Timed Quiz</h1> <h2>Timer: <span id="countdown"></span></h2>
+        <button id="highScores">High-Scores</button>
+        
+    </header>
+    <main>
+        <section class="container">
+            <div class="quizCard">
+                <div class="questions">questions</div>
+                <div class="answers"></div>
+                    <button class="answerBtn" id="answerBtn1"></button>
+                    <button class="answerBtn" id="answerBtn2"></button>
+                    <button class="answerBtn" id="answerBtn3"></button>
+                    <button class="answerBtn" id="answerBtn4"></button>
+                <button id="nextButton">Next</button>
+            </div>
+            <div class="infoCard">
+                <h2>Ready?</h2>
+                <button id="beginButton">BEGIN!</button>
+                <h2>Info</h2>
+                <ul>
+                    <li>When you press begin, the quiz will begin and the timer will start at 75 seconds</li>
+                    <li>Each question right is worth 100 points</li>
+                    <li>If you do not answer a question correctly, it will subtract 10 seconds off the clock</li>
+                    <li>Your scores are recorded and you can check them out by clicking the high score button</li>
+                    <li>Good luck, and have fun!</li>
+                </ul>
+            </div>
+            <div class="scoreBox">
+                <p>Score: <span id="scoreCount"></span></p>
+            </div>
+        </section>
+    </main>
+    <script src="./assets/java/script.js"></script>
+</body>
