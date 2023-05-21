@@ -20,16 +20,21 @@
     </header>
     <main>
         <section class="container">
-            <div class="quizCard">
-                <div class="questions">questions</div>
-                <div class="answers"></div>
-                    <button class="answerBtn" id="answerBtn1"></button>
-                    <button class="answerBtn" id="answerBtn2"></button>
-                    <button class="answerBtn" id="answerBtn3"></button>
-                    <button class="answerBtn" id="answerBtn4"></button>
-                <button id="nextButton">Next</button>
+            <div class="quizCard" id="quizCard">
+                <h2 class="questionText"></h2>
+                    <div class="choices">
+                    </div>
+                </div>
+            <div class="endQuizCard" id="endQuizCard">
+                <h2>Congragulations!!</h2>
+                <p>Your final score was <span id="finalScore"></span></p>
+                <label for="name">Enter Name:</label>
+
+                <input type="text" id="name" name="name">
+                <button class="button" id="submitScoreBtn">Submit Score</button>
+                <button class="button" id="playAgainBtn">Play Again></button>
             </div>
-            <div class="infoCard">
+            <div class="infoCard" id="infoCard">
                 <h2>Ready?</h2>
                 <button id="beginButton">BEGIN!</button>
                 <h2>Info</h2>
@@ -41,8 +46,8 @@
                     <li>Good luck, and have fun!</li>
                 </ul>
             </div>
-            <div class="scoreBox">
-                <p>Score: <span id="scoreCount"></span></p>
+            <div class="scoreBox" id="scoreBox">
+                <p>Score:<span id="scoreCount"></span></p>
             </div>
         </section>
     </main>
