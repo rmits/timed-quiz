@@ -21,14 +21,19 @@
     <main>
         <section class="container">
             <div class="quizCard" id="quizCard">
-                <h2 id="questionText">Question 1</h2>
-                    <div class="answers" id="answers">
-                        <button class="answerBtn" id="answerBtn1">Answer 1</button>
-                        <button class="answerBtn" id="answerBtn2">Answer 2</button>
-                        <button class="answerBtn" id="answerBtn3">Answer 3</button>
-                        <button class="answerBtn" id="answerBtn4">Answer 4</button>
+                <h2 class="questionText"></h2>
+                    <div class="choices">
                     </div>
                 </div>
+            <div class="endQuizCard" id="endQuizCard">
+                <h2>Congragulations!!</h2>
+                <p>Your final score was <span id="finalScore"></span></p>
+                <label for="name">Enter Name:</label>
+
+                <input type="text" id="name" name="name">
+                <button class="button" id="submitScoreBtn">Submit Score</button>
+                <button class="button" id="playAgainBtn">Play Again></button>
+            </div>
             <div class="infoCard" id="infoCard">
                 <h2>Ready?</h2>
                 <button id="beginButton">BEGIN!</button>
@@ -42,7 +47,7 @@
                 </ul>
             </div>
             <div class="scoreBox" id="scoreBox">
-                <p>Score: <span id="scoreCount"></span></p>
+                <p>Score:<span id="scoreCount"></span></p>
             </div>
         </section>
     </main>
