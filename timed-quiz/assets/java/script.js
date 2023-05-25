@@ -9,33 +9,34 @@ var infoCard = document.getElementById('infoCard');
 var quizCard = document.getElementById('quizCard');
 var endQuizCard = document.getElementById('endQuizCard');
 var submitButton = document.getElementById('submitScoreBtn');
-var playAgainButton = document.getElementById('playAgaintBtn');
+var highScoreCard = document.getElementById('highScoreCard');
+var highScoreBtn = document.getElementById('highScoreBtn');
+var clearScoreBtn = document.getElementById('clearScoresBtn');
+var userName = document.getElementById('username');
+var goBackBtn = document.getElementById('goBackBtn');
+var scoreList = document.getElementById('scoreList');
 var currentScore = 0;
-var timeLeft = 75;
 var currentQuestioni = 0;
+var timeLeft = 75;
 
-
-function scoreKeeper() {
-  currentScore +=100;
-  scoreCount.textContent = currentScore;
-  }
-
+//This function runs the timer
 function gameCounter() {
-    var timeInterval = setInterval(function () {
-      timeLeft --;
-      timerEl.textContent = timeLeft
-   
-      if (timeLeft === 0) {
-        clearInterval(timeInterval);
-        endQuiz();
-      }
-    }, 
-    1000)
-  }
+  var timeInterval = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = timeLeft
 
-function startGame() {
-  infoCard.setAttribute("style", "display: none;");
-  quizCard.setAttribute("style", "display: flex;");
+    if (timeLeft <= 0) {
+      clearInterval(timeInterval);
+      endQuiz();
+    }
+  },
+    1000)
+}
+
+function resetNumbers() {
+  currentScore = 0;
+  timeLeft = 75;
+  currentQuestioni = 0;
 }
 
 var quizQuestions = [{
@@ -43,17 +44,17 @@ var quizQuestions = [{
   answers: ['Celtics', 'Hawks', 'Knicks', 'Warriors'],
   correctAnswer: 0
 },
- {
+{
   question: 'How many players are on a basketball court at the same time?',
   answers: ['12', '8', '6', '10'],
   correctAnswer: 3
-  },
-   {
+},
+{
   question: 'What does the NBA Stand for?',
   answers: ['National Basketball Association', 'National Bread Association', 'New Basketball Association', 'Never Broke Again'],
   correctAnswer: 0
-  },
-  {
+},
+{
   question: 'How many rings does Lebron James have currently (2023)',
   answers: ['5', '3', '4', '6'],
   correctAnswer: 2
@@ -78,60 +79,108 @@ var quizQuestions = [{
   answers: ['Oatmeal', 'Eggs', 'Cereal', 'Nothing'],
   correctAnswer: 0
 }]
-console.log(quizQuestions[currentQuestioni].correctAnswer);
 
-function quizBegin () {
- var questionEl = document.querySelector('.questionText');
- var choicesEl = document.querySelector('.choices');
+function quizBegin() {
+  var questionEl = document.querySelector('.questionText');
+  var choicesEl = document.querySelector('.choices');
+  var scoreCount = document.getElementById('scoreCount');
+  infoCard.setAttribute("style", "display: none;");
+  quizCard.setAttribute("style", "display: flex;");
+  scoreCount.textContent = currentScore;
+  finalScore.textContent = currentScore;
 
- questionEl.textContent = '';
- choicesEl.innerHTML = '';
- questionEl.textContent = quizQuestions[currentQuestioni].question;
+  //This is put in place to clear what was there in the question prior
+  questionEl.textContent = '';
+  choicesEl.innerHTML = '';
 
- quizQuestions[currentQuestioni].answers.forEach((answer, index) => {
-  var answerButton = document.createElement('button');
-  answerButton.className = 'answerBtn';
-  answerButton.textContent = answer;
+  questionEl.textContent = quizQuestions[currentQuestioni].question;
 
-  answerButton.addEventListener('click', () => selectedAnswer(index));
-  choicesEl.appendChild(answerButton);
-})}
+  quizQuestions[currentQuestioni].answers.forEach((answer, index) => {
+    var answerButton = document.createElement('button');
+    answerButton.className = 'answerBtn';
+    answerButton.textContent = answer;
+
+    answerButton.addEventListener('click', () => selectedAnswer(index));
+    choicesEl.appendChild(answerButton);
+  })
+}
 
 function selectedAnswer(answerIndex) {
-console.log(scoreCount);
-  if(answerIndex == quizQuestions[currentQuestioni].correctAnswer) {
-  scoreKeeper();
-} else {
-  timeLeft -=10;
-}
-
-currentQuestioni ++;
-
-if(currentQuestioni === quizQuestions.length) {
- endQuiz();
-} else {
-  quizBegin();
-}
-}
-
-function endQuiz() {
-quizCard.setAttribute('style', 'display:none');
-endQuizCard.setAttribute('style', 'display:flex');
-finalScore.textContent = currentScore;
-}
-
-function highScoresBoard() {
-    localStorage.setItem('High Scores', highScores);
-
-    gameWins.textContent = localStorage.getItem('wins');
-    gameLosses.textContent = localStorage.getItem('losses');
+  if (answerIndex == quizQuestions[currentQuestioni].correctAnswer) {
+    currentScore += 100;
+  } else {
+    timeLeft -= 20;
   }
 
-  
+  //Adds one to the index, so it will move on to the next object in quizQuestions
+  currentQuestioni++;
 
-  beginButtonEl.addEventListener('click', function() {
-    gameCounter();
-    startGame();
+  //If there are no more questions left, it will run function endQuiz, otherwise keep running the quiz function
+  if (currentQuestioni === quizQuestions.length) {
+    endQuiz();
+    timerEl.textContent = '';
+  } else {
     quizBegin();
-  })
-  
+  }
+}
+
+//This hides the quiz card, and displays my endQuizCard
+function endQuiz() {
+  quizCard.setAttribute('style', 'display:none');
+  endQuizCard.setAttribute('style', 'display:flex');
+}
+
+function saveHighScore(username, score) {
+  const highScores = localStorage.getItem('highScores') ? JSON.parse(localStorage.getItem('highScores')) : [];
+  const newHighScore = { username, score };
+  highScores.push(newHighScore);
+  highScores.sort((a, b) => b.score - a.score);
+  localStorage.setItem('highScores', JSON.stringify(highScores));
+}
+
+function displayHighScores() {
+  const highScores = localStorage.getItem('highScores') ? JSON.parse(localStorage.getItem('highScores')) : [];
+  const leaderboard = document.getElementById('leaderboard');
+  leaderboard.innerHTML = '';
+  highScores.forEach((score, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${score.username}: ${score.score}`;
+    leaderboard.appendChild(listItem);
+  });
+}
+
+
+beginButtonEl.addEventListener('click', function (event) {
+  event.preventDefault();
+  resetNumbers();
+  quizBegin();
+  gameCounter();
+})
+
+submitButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  endQuizCard.setAttribute('style', 'display: none');
+  highScoreCard.setAttribute('style', 'display:none');
+  infoCard.setAttribute('style', 'display: block');
+  highScoreBtn.setAttribute('style', 'display:block');
+  saveHighScore(userName.value, currentScore);
+})
+
+highScoreBtn.addEventListener('click', function () {
+  endQuizCard.setAttribute('style', 'display: none');
+  highScoreCard.setAttribute('style', 'display:flex');
+  infoCard.setAttribute('style', 'display: none');
+  highScoreBtn.setAttribute('style', 'display:none');
+  displayHighScores();
+})
+
+clearScoreBtn.addEventListener('click', function () {
+  localStorage.removeItem('highScores');
+  leaderboard.textContent = '';
+})
+
+goBackBtn.addEventListener('click', function () {
+  highScoreCard.setAttribute('style', 'display:none');
+  infoCard.setAttribute('style', 'display: block');
+  highScoreBtn.setAttribute('style', 'display:block');
+})
