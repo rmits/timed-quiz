@@ -15,7 +15,7 @@
 <body>
     <header>
         <h1>Timed Quiz</h1> <h2>Timer: <span id="countdown"></span></h2>
-        <button id="highScores">High-Scores</button>
+        <button id="highScoreBtn">High-Scores</button>
         
     </header>
     <main>
@@ -30,9 +30,15 @@
                 <p>Your final score was <span id="finalScore"></span></p>
                 <label for="name">Enter Name:</label>
 
-                <input type="text" id="name" name="name">
-                <button class="button" id="submitScoreBtn">Submit Score</button>
-                <button class="button" id="playAgainBtn">Play Again></button>
+                <input type="text" id="username" name="name">
+                <button class="button" id="submitScoreBtn">Submit Score and Return Home</button>
+            </div>
+            <div id="highScoreCard">
+                <h2>High Score Leaderboard</h2>
+                <ul id="leaderboard"> 
+                </ul>
+                <button id="clearScoresBtn">Clear All Scores</button>
+                <button id="goBackBtn">Return</button>
             </div>
             <div class="infoCard" id="infoCard">
                 <h2>Ready?</h2>
@@ -41,7 +47,7 @@
                 <ul>
                     <li>When you press begin, the quiz will begin and the timer will start at 75 seconds</li>
                     <li>Each question right is worth 100 points</li>
-                    <li>If you do not answer a question correctly, it will subtract 10 seconds off the clock</li>
+                    <li>If you do not answer a question correctly, it will subtract 20 seconds off the clock</li>
                     <li>Your scores are recorded and you can check them out by clicking the high score button</li>
                     <li>Good luck, and have fun!</li>
                 </ul>
